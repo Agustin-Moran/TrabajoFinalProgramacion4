@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="GymTurnos.API/GymTurnos.API.csproj" Id="8b5b6664-5ff9-45fd-ab13-674e4da2dc88" />
+  <Project Path="GymTurnos.Application/GymTurnos.Application.csproj" Id="ec09658d-ebef-4119-8393-cd2f69e2ae0c" />
+  <Project Path="GymTurnos.Domain/GymTurnos.Domain.csproj" />
+  <Project Path="GymTurnos.Infrastructure/GymTurnos.Infrastructure.csproj" Id="72bb4df7-ad8c-4567-99be-b3e163adc57f" />
+</Solution>
