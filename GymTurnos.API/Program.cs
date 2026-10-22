@@ -1,5 +1,10 @@
 using GymTurnos.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using GymTurnos.Application.Interfaces.Repositories;
+using GymTurnos.Application.Interfaces.Services;
+using GymTurnos.Application.Services;
+using GymTurnos.Infrastructure.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +14,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -16,7 +22,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         connectionString,
         ServerVersion.AutoDetect(connectionString)
     ));
-
+builder.Services.AddScoped<ICamaRepository, CamaRepository>();
+builder.Services.AddScoped<ICamaService, CamaService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
