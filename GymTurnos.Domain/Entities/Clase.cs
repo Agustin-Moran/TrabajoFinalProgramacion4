@@ -14,5 +14,5 @@ public class Clase
 
     public int ProfesorId { get; set; }
 
-    public Usuario? Profesor { get; set; }
+    public Profesor? Profesor { get; set; }
 }

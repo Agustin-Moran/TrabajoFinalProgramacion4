@@ -1,11 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using GymTurnos.Domain.Enums;
 
 namespace GymTurnos.Domain.Entities;
 
-public class Usuario
+public class Profesor
 {
     public int Id { get; set; }
 
@@ -17,6 +16,5 @@ public class Usuario
 
     public string PasswordHash { get; set; } = string.Empty;
 
-    public Rol Rol { get; set; }
     public bool Activo { get; set; } = true;
 }

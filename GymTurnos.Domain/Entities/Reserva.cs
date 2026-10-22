@@ -14,7 +14,7 @@ public class Reserva
 
     public int ClienteId { get; set; }
 
-    public Usuario? Cliente { get; set; }
+    public Cliente? Cliente { get; set; }
 
     public int ClaseId { get; set; }
 
