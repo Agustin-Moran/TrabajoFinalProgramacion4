@@ -26,6 +26,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     ));
 builder.Services.AddScoped<ICamaRepository, CamaRepository>();
 builder.Services.AddScoped<ICamaService, CamaService>();
+
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+builder.Services.AddScoped<IClaseRepository, ClaseRepository>();
+builder.Services.AddScoped<IClaseService, ClaseService>();
+
+builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
+builder.Services.AddScoped<IReservaService, ReservaService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
