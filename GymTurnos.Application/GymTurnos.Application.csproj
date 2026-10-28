@@ -10,8 +10,4 @@
     <ProjectReference Include="..\GymTurnos.Domain\GymTurnos.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
 </Project>
