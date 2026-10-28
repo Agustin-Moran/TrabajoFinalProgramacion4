@@ -4,9 +4,27 @@ using GymTurnos.Application.Interfaces.Repositories;
 using GymTurnos.Application.Interfaces.Services;
 using GymTurnos.Application.Services;
 using GymTurnos.Infrastructure.Repositories;
+using GymTurnos.Infrastructure.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+var jwtSecret = builder.Configuration["Jwt:Secret"];
+
+if (string.IsNullOrWhiteSpace(jwtSecret))
+{
+    throw new InvalidOperationException(
+        "No se encontró Jwt:Secret en la configuración."
+    );
+}
+
 
 // Add services to the container.
 
@@ -35,6 +53,39 @@ builder.Services.AddScoped<IClaseService, ClaseService>();
 
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 builder.Services.AddScoped<IReservaService, ReservaService>();
+
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer =
+                    builder.Configuration["Jwt:Issuer"],
+
+                ValidAudience =
+                    builder.Configuration["Jwt:Audience"],
+
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSecret)
+                    )
+            };
+    });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<IJwtService, JwtService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,6 +102,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

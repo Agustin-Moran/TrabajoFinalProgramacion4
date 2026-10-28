@@ -8,7 +8,11 @@ public interface IReservaService
 
     Task<Reserva?> GetByIdAsync(int id);
 
+    Task<List<Reserva>> GetByClienteIdAsync(int clienteId);
+
     Task<Reserva> CreateAsync(Reserva reserva);
+
+    Task<bool> CancelarAsync(int id);
 
     Task<Reserva?> UpdateAsync(Reserva reserva);
 

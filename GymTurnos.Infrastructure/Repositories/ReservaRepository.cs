@@ -80,4 +80,18 @@ public class ReservaRepository : IReservaRepository
             r.ClaseId == claseId &&
             r.Activa);
     }
+    public async Task<List<Reserva>> GetByClienteIdAsync(int clienteId)
+    {
+        return await _context.Reservas
+            .Include(r => r.Clase)
+            .Include(r => r.Cama)
+            .Where(r => r.ClienteId == clienteId && r.Activa)
+            .ToListAsync();
+    }
+
+    public async Task<int> ContarReservasActivasPorClaseAsync(int claseId)
+    {
+        return await _context.Reservas
+            .CountAsync(r => r.ClaseId == claseId && r.Activa);
+    }
 }
