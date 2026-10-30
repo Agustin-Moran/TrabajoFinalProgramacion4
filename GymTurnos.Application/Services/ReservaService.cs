@@ -86,9 +86,9 @@ public class ReservaService : IReservaService
         var camaOcupada =
             await _reservaRepository
                 .ExisteReservaParaCamaYClaseAsync(
-                    reserva.CamaId,
-                    reserva.ClaseId
-                );
+                reserva.CamaId,
+                reserva.ClaseId
+            );
 
         if (camaOcupada)
             throw new InvalidOperationException(
