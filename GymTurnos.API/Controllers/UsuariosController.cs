@@ -62,8 +62,6 @@ public class UsuariosController : ControllerBase
 
     [HttpPost]
 
-    [AllowAnonymous]
-
     public async Task<ActionResult<UsuarioDto>> Create(UsuarioCreateDto dto)
     {
         try
@@ -105,30 +103,27 @@ public class UsuariosController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<UsuarioDto>> Update(
-        int id,
-        UsuarioUpdateDto dto)
+    public async Task<ActionResult<UsuarioDto>> Update(int id,UsuarioUpdateDto dto)
     {
-        var usuarioExistente = await _usuarioService.GetByIdAsync(id);
-
-        if (usuarioExistente == null)
-            return NotFound();
-
-        usuarioExistente.Nombre = dto.Nombre;
-        usuarioExistente.Apellido = dto.Apellido;
-        usuarioExistente.Email = dto.Email;
-        usuarioExistente.Activo = dto.Activo;
-        usuarioExistente.Rol = dto.Rol;
+     
+        var usuario = new Usuario
+        {
+            Id = id,
+            Nombre = dto.Nombre,
+            Apellido = dto.Apellido,
+            Email = dto.Email,
+            Activo = dto.Activo,
+            Rol = dto.Rol
+        };
 
         try
         {
-            var usuarioActualizado =
-                await _usuarioService.UpdateAsync(usuarioExistente);
+            var usuarioActualizado = await _usuarioService.UpdateAsync(usuario);
 
             if (usuarioActualizado == null)
                 return NotFound();
 
-            var resultado = new UsuarioDto
+           return Ok(new UsuarioDto
             {
                 Id = usuarioActualizado.Id,
                 Nombre = usuarioActualizado.Nombre,
@@ -136,9 +131,8 @@ public class UsuariosController : ControllerBase
                 Email = usuarioActualizado.Email,
                 Activo = usuarioActualizado.Activo,
                 Rol = usuarioActualizado.Rol
-            };
+            });
 
-            return Ok(resultado);
         }
         catch (InvalidOperationException ex)
         {

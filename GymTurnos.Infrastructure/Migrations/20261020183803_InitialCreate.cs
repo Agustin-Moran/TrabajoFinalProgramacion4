@@ -15,7 +15,7 @@ namespace GymTurnos.Infrastructure.Migrations
             migrationBuilder.AlterDatabase()
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Administradores",
                 columns: table => new
                 {
