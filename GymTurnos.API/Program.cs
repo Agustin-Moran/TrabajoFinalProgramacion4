@@ -106,17 +106,17 @@ builder.Services.AddHttpClient<IEmailService, ResendEmailService>(
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.MapOpenApi();
+app.UseSwaggerUI(options =>
 {
-    app.MapOpenApi();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint(
-            "/openapi/v1.json",
-            "Practica Web API v1");
-    }
-        );
-}
+    options.SwaggerEndpoint(
+        "/openapi/v1.json",
+        "Practica Web API v1");
+});
+
+// Redirigir la raíz ("/") directamente a Swagger
+app.MapGet("/", () => Results.Redirect("/swagger"))
+    .ExcludeFromDescription();
 
 app.UseHttpsRedirection();
 
