@@ -125,6 +125,27 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/api/test-db", async (AppDbContext db) =>
+{
+    try
+    {
+        var conectado = await db.Database.CanConnectAsync();
+        var totalUsuarios = await db.Usuarios.CountAsync();
+        var emails = await db.Usuarios.Select(u => u.Email).ToListAsync();
+
+        return Results.Ok(new
+        {
+            conectado,
+            totalUsuarios,
+            emailsRegistrados = emails
+        });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error al conectar a la base de datos: {ex.Message}");
+    }
+});
+
 app.Run();
 
 internal sealed class BearerSecuritySchemeTransformer(
