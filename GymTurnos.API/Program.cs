@@ -34,17 +34,14 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi(options =>
 {
+    options.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
     options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
 });
-builder.Services.AddEndpointsApiExplorer();
-
-
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString,
-        sql => sql.EnableRetryOnFailure()));
+    options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure()));
 
 builder.Services.AddScoped<ICamaRepository, CamaRepository>();
 builder.Services.AddScoped<ICamaService, CamaService>();
@@ -86,7 +83,6 @@ builder.Services
             };
     });
 
-builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IJwtService, JwtService>();
 
@@ -124,27 +120,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapGet("/api/test-db", async (AppDbContext db) =>
-{
-    try
-    {
-        var conectado = await db.Database.CanConnectAsync();
-        var totalUsuarios = await db.Usuarios.CountAsync();
-        var emails = await db.Usuarios.Select(u => u.Email).ToListAsync();
-
-        return Results.Ok(new
-        {
-            conectado,
-            totalUsuarios,
-            emailsRegistrados = emails
-        });
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem($"Error al conectar a la base de datos: {ex.Message}");
-    }
-});
 
 app.Run();
 
