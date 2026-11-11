@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GymTurnos.Infrastructure.Migrations
 {
-    /// <inheritdoc />
     public partial class InitialSqlServer : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -120,7 +118,6 @@ namespace GymTurnos.Infrastructure.Migrations
                 column: "ClienteId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

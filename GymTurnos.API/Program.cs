@@ -100,7 +100,6 @@ builder.Services.AddHttpClient<IEmailService, ResendEmailService>(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app.MapOpenApi();
 app.UseSwaggerUI(options =>
 {
@@ -109,7 +108,6 @@ app.UseSwaggerUI(options =>
         "Practica Web API v1");
 });
 
-// Redirigir la raíz ("/") directamente a Swagger
 app.MapGet("/", () => Results.Redirect("/swagger"))
     .ExcludeFromDescription();
 

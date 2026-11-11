@@ -6,9 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
 
-
-
-
 namespace GymTurnos.API.Controllers;
 
 [ApiController]

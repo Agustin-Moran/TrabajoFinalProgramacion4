@@ -23,7 +23,6 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // En SQL Server se deben evitar múltiples caminos de cascada (cycles/multiple cascade paths)
         modelBuilder.Entity<Reserva>()
             .HasOne(r => r.Cliente)
             .WithMany()

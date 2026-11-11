@@ -5,10 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 
-
-
-
-
 namespace GymTurnos.API.Controllers;
 
 [ApiController]
