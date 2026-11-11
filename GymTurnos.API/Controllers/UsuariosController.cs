@@ -61,7 +61,6 @@ public class UsuariosController : ControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous]
     public async Task<ActionResult<UsuarioDto>> Create(UsuarioCreateDto dto)
     {
         try

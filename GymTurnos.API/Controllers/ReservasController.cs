@@ -195,6 +195,7 @@ public class ReservasController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Delete(int id)
     {
         var eliminado = await _reservaService.DeleteAsync(id);

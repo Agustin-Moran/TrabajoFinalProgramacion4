@@ -83,9 +83,10 @@ public class ReservaRepository : IReservaRepository
     public async Task<List<Reserva>> GetByClienteIdAsync(int clienteId)
     {
         return await _context.Reservas
+            .Include(r => r.Cliente)
             .Include(r => r.Clase)
             .Include(r => r.Cama)
-            .Where(r => r.ClienteId == clienteId && r.Activa)
+            .Where(r => r.ClienteId == clienteId)
             .ToListAsync();
     }
 
